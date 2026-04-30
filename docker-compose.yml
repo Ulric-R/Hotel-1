@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: sylvana-backend
+    restart: unless-stopped
+    volumes:
+      - ./data/db:/data
+      - ./data/uploads:/uploads
+    expose:
+      - "8000"
+    networks:
+      - sylvana
+
+  frontend-build:
+    # One-shot container that builds the React app into ./dist
+    image: node:20-alpine
+    container_name: sylvana-frontend-build
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: sh -c "npm install && npm run build"
+    networks:
+      - sylvana
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: sylvana-nginx
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/.htpasswd:/etc/nginx/.htpasswd:ro
+      - ./dist:/usr/share/nginx/html:ro
+    networks:
+      - sylvana
+
+networks:
+  sylvana:
+    driver: bridge
