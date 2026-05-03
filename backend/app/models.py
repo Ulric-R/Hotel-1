@@ -38,7 +38,7 @@ class ArticleBase(BaseModel):
     excerpt: str
     content: str
     image: str
-    author: str = "Équipe Sylvana"
+    author: str = "Équipe Fanja"
     category: str = "Nature"
 
 
@@ -120,5 +120,6 @@ class Reservation(ReservationCreate):
     booking_number: str = Field(default_factory=lambda: f"SYL-{uuid.uuid4().hex[:5].upper()}")
     total: float = 0
     nights: int = 1
-    status: str = "confirmed"
+    # New reservations are initially pending and require admin confirmation
+    status: str = "pending"
     created_at: str = Field(default_factory=now_iso)

@@ -10,7 +10,6 @@ export default function Dashboard() {
     photos: 0,
     activities: 0,
     reservations: 0,
-    revenue: 0,
   });
   const [recent, setRecent] = useState<{ name: string; total: number; date: string }[]>([]);
 
@@ -31,7 +30,6 @@ export default function Dashboard() {
         photos: photos.length,
         activities: activities.length,
         reservations: reservations.length,
-        revenue,
       });
       setRecent(
         reservations.slice(0, 5).map((r) => ({
@@ -50,14 +48,13 @@ export default function Dashboard() {
     { label: "Promotions", value: stats.promos, color: "bg-rose-50 text-rose-700" },
     { label: "Photos", value: stats.photos, color: "bg-sky-50 text-sky-700" },
     { label: "Réservations", value: stats.reservations, color: "bg-violet-50 text-violet-700" },
-    { label: "Revenu (€)", value: stats.revenue.toFixed(0), color: "bg-stone-800 text-white col-span-2 sm:col-span-1" },
   ];
 
   return (
     <>
       <PageHeader
         title="Tableau de bord"
-        subtitle="Vue d'ensemble de votre établissement Sylvana."
+        subtitle="Vue d'ensemble de votre établissement Fanja."
       />
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
         {tiles.map((t) => (

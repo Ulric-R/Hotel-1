@@ -1,5 +1,6 @@
 """Seed initial data on first run."""
-from . import storage
+from app import storage
+from app import db
 
 INITIAL_ACTIVITIES = [
     # Two "featured" big cards
@@ -114,15 +115,28 @@ INITIAL_PHOTOS = [
 
 
 def seed_if_empty():
+    # Ensure DB tables exist
+    db.init_db()
+
+    # Insert initial items only when corresponding tables are empty
     if not storage.load("rooms"):
-        storage.save("rooms", INITIAL_ROOMS)
+        for r in INITIAL_ROOMS:
+            storage.insert("rooms", r)
     if not storage.load("articles"):
-        storage.save("articles", INITIAL_ARTICLES)
+        for a in INITIAL_ARTICLES:
+            storage.insert("articles", a)
     if not storage.load("promos"):
-        storage.save("promos", INITIAL_PROMOS)
+        for p in INITIAL_PROMOS:
+            storage.insert("promos", p)
     if not storage.load("photos"):
-        storage.save("photos", INITIAL_PHOTOS)
+        from datetime import datetime
+        for p in INITIAL_PHOTOS:
+            if "uploaded_at" not in p:
+                p = {**p, "uploaded_at": datetime.utcnow().isoformat()}
+            storage.insert("photos", p)
     if not storage.load("activities"):
-        storage.save("activities", INITIAL_ACTIVITIES)
+        for a in INITIAL_ACTIVITIES:
+            storage.insert("activities", a)
     if storage.load("reservations") == []:
-        storage.save("reservations", [])
+        # leave empty list for reservations; no initial inserts
+        pass

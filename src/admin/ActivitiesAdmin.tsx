@@ -3,16 +3,26 @@ import { adminApi, api, type Activity } from "../lib/api";
 import { useApiData } from "../lib/useApi";
 import { Button, Card, ConfirmDelete, Empty, Field, ImageUploader, Input, PageHeader, Textarea } from "./ui";
 
+import Icon from "./icons";
+
 const empty: Omit<Activity, "id"> = {
   title: "",
   description: "",
-  icon: "🌿",
+  icon: "leaf",
   image: null,
   featured: false,
   order: 10,
 };
 
-const SUGGESTED_ICONS = ["🌿", "🥾", "🧘", "🚴", "🦌", "🔥", "⭐", "♨️", "🍽️", "🛶", "🏹", "📸", "🎣", "🌌"];
+const SUGGESTED_ICONS = [
+  "leaf",
+  "hike",
+  "yoga",
+  "bike",
+  "camera",
+  "star",
+  "fire",
+];
 
 export default function ActivitiesAdmin() {
   const { data, reload, setData } = useApiData(api.activities, [] as Activity[]);
@@ -95,7 +105,7 @@ export default function ActivitiesAdmin() {
             {a.image && <img src={a.image} alt={a.title} className="w-full h-40 object-cover" />}
             <div className="p-4">
               <div className="flex items-center gap-2">
-                <span className="text-2xl">{a.icon}</span>
+                <span className="text-2xl"><Icon name={a.icon} size={28} /></span>
                 <h3 className="font-serif text-lg text-stone-800">{a.title}</h3>
               </div>
               <p className="text-sm text-stone-600 mt-2 line-clamp-2">{a.description}</p>
@@ -113,12 +123,12 @@ export default function ActivitiesAdmin() {
         {tiles.length === 0 && <Empty message="Aucune vignette." />}
         {tiles.map((a) => (
           <Card key={a.id} className="p-4 text-center">
-            <div className="text-4xl">{a.icon}</div>
+            <div className="text-4xl"><Icon name={a.icon} size={36} /></div>
             <div className="font-medium text-stone-800 mt-2 text-sm">{a.title}</div>
             <div className="text-xs text-stone-400">ordre : {a.order}</div>
-            <div className="flex justify-center gap-1 mt-3">
-              <Button variant="ghost" onClick={() => { setEditing(a); setCreating(false); }}>✏️</Button>
-              <Button variant="ghost" onClick={() => { if (confirm("Supprimer ?")) del(a.id); }}>🗑</Button>
+              <div className="flex justify-center gap-1 mt-3">
+              <Button variant="ghost" onClick={() => { setEditing(a); setCreating(false); }}><Icon name="edit" /></Button>
+              <Button variant="ghost" onClick={() => { if (confirm("Supprimer ?")) del(a.id); }}><Icon name="trash" /></Button>
             </div>
           </Card>
         ))}
@@ -144,22 +154,18 @@ function ActivityForm({
         <Field label="Titre">
           <Input required value={a.title} onChange={(e) => setA({ ...a, title: e.target.value })} />
         </Field>
-        <Field label="Icône (emoji)">
+            <Field label="Icône">
           <div className="flex gap-2">
-            <Input
-              value={a.icon}
-              onChange={(e) => setA({ ...a, icon: e.target.value })}
-              className="text-2xl text-center w-20"
-            />
+            <input type="hidden" value={a.icon} />
             <div className="flex flex-wrap gap-1">
               {SUGGESTED_ICONS.map((ic) => (
                 <button
                   key={ic}
                   type="button"
                   onClick={() => setA({ ...a, icon: ic })}
-                  className="w-8 h-8 hover:bg-stone-100 rounded text-xl"
+                  className={`w-10 h-10 flex items-center justify-center hover:bg-stone-100 rounded ${a.icon===ic? 'ring-2 ring-emerald-200':''}`}
                 >
-                  {ic}
+                  <Icon name={ic} size={20} />
                 </button>
               ))}
             </div>

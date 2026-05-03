@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { adminApi } from "../lib/api";
+import Icon from "./icons";
 
 type Tab =
   | "dashboard"
@@ -33,13 +34,13 @@ export default function AdminLayout({ active, onChange, onExit, children }: Prop
   }, []);
 
   const tabs: { id: Tab; label: string; icon: string }[] = [
-    { id: "dashboard", label: "Tableau de bord", icon: "📊" },
-    { id: "rooms", label: "Hébergements", icon: "🏡" },
-    { id: "activities", label: "Expériences", icon: "🌿" },
-    { id: "articles", label: "Articles", icon: "📰" },
-    { id: "promos", label: "Promotions", icon: "🎁" },
-    { id: "photos", label: "Galerie photos", icon: "🖼️" },
-    { id: "reservations", label: "Réservations", icon: "📅" },
+    { id: "dashboard", label: "Tableau de bord", icon: "news" },
+    { id: "rooms", label: "Hébergements", icon: "home" },
+    { id: "activities", label: "Expériences", icon: "leaf" },
+    { id: "articles", label: "Articles", icon: "news" },
+    { id: "promos", label: "Promotions", icon: "gift" },
+    { id: "photos", label: "Galerie photos", icon: "gallery" },
+    { id: "reservations", label: "Réservations", icon: "calendar" },
   ];
 
   const activeLabel = tabs.find((t) => t.id === active)?.label ?? "Admin";
@@ -51,7 +52,7 @@ export default function AdminLayout({ active, onChange, onExit, children }: Prop
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
             <path d="M12 2L4 14h5v8h6v-8h5L12 2z" />
           </svg>
-          Sylvana
+          Fanja
         </div>
         <div className="text-xs uppercase tracking-widest text-emerald-400 mt-1">
           Administration
@@ -72,7 +73,7 @@ export default function AdminLayout({ active, onChange, onExit, children }: Prop
                 : "text-stone-300 hover:bg-stone-800"
             }`}
           >
-            <span>{t.icon}</span>
+            <span className="w-5 h-5"><Icon name={t.icon} size={18} /></span>
             {t.label}
           </button>
         ))}

@@ -1,5 +1,5 @@
 """
-FastAPI backend for Sylvana Hotel.
+FastAPI backend for Fanja Hotel.
 
 Auth note: This API does NOT implement application-level auth for the admin
 endpoints. Admin routes (anything under /api/admin/*) are intended to be
@@ -18,9 +18,9 @@ from fastapi import FastAPI, HTTPException, UploadFile, File, Form, Header
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from . import storage
-from .seed import seed_if_empty
-from .models import (
+from app import storage
+from app.seed import seed_if_empty
+from app.models import (
     Room, RoomCreate,
     Article, ArticleCreate,
     Promo, PromoCreate,
@@ -30,7 +30,7 @@ from .models import (
 )
 
 # ---------- App setup ----------
-app = FastAPI(title="Sylvana Hotel API", version="1.0.0")
+app = FastAPI(title="Fanja Hotel API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -292,6 +292,24 @@ def admin_delete_reservation(reservation_id: str):
     if not storage.delete("reservations", reservation_id):
         raise HTTPException(404, "Reservation not found")
     return {"deleted": True}
+
+
+@app.post("/api/admin/reservations/{reservation_id}/confirm", response_model=Reservation)
+def admin_confirm_reservation(reservation_id: str):
+    """Mark a reservation as confirmed (admin action)."""
+    updated = storage.update("reservations", reservation_id, {"status": "confirmed"})
+    if not updated:
+        raise HTTPException(404, "Reservation not found")
+    return updated
+
+
+@app.get("/api/admin/notifications")
+def admin_notifications(limit: int = 10):
+    """Return recent pending reservations for admin notification polling."""
+    items = storage.load("reservations")
+    pending = [r for r in items if r.get("status") == "pending"]
+    pending_sorted = sorted(pending, key=lambda r: r.get("created_at", ""), reverse=True)
+    return {"count": len(pending_sorted), "items": pending_sorted[:limit]}
 
 
 # ---------- Admin info (echo authenticated user from Nginx) ----------

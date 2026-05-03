@@ -1,6 +1,7 @@
 /** Shared admin UI primitives. */
 import { useState } from "react";
 import { adminApi } from "../lib/api";
+import Icon from "./icons";
 
 export function PageHeader({
   title,
@@ -86,7 +87,7 @@ export function Card({ children, className = "" }: { children: React.ReactNode; 
 export function Empty({ message }: { message: string }) {
   return (
     <div className="text-center py-16 text-stone-400">
-      <div className="text-5xl mb-3">📭</div>
+      <div className="text-5xl mb-3"><Icon name="inbox" size={48} /></div>
       {message}
     </div>
   );
@@ -137,8 +138,8 @@ export function ImageUploader({
           placeholder="/uploads/... ou URL https://..."
         />
         <label className="inline-block mt-2 cursor-pointer">
-          <span className="text-sm text-emerald-700 hover:text-emerald-800 underline">
-            {uploading ? "Téléversement..." : "📤 Téléverser une image"}
+          <span className="text-sm text-emerald-700 hover:text-emerald-800 underline flex items-center gap-2">
+            {uploading ? "Téléversement..." : <><Icon name="upload" /> Téléverser une image</>}
           </span>
           <input
             type="file"

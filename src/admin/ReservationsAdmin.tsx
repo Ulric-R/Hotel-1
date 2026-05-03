@@ -1,6 +1,8 @@
 import { adminApi, type Reservation } from "../lib/api";
 import { useApiData } from "../lib/useApi";
 import { Button, Card, Empty, PageHeader } from "./ui";
+import Icon from "./icons";
+import { useEffect, useState } from "react";
 
 export default function ReservationsAdmin() {
   const { data, reload, setData } = useApiData(() => adminApi.reservations(), [] as Reservation[]);
@@ -15,9 +17,46 @@ export default function ReservationsAdmin() {
     }
   };
 
+  const confirm = async (id: string) => {
+    try {
+      const updated = await adminApi.confirmReservation(id);
+      setData((d) => d.map((r) => (r.id === id ? updated : r)));
+    } catch {
+      reload();
+    }
+  };
+
+  // Simple polling for new reservations/notifications
+  const [notifyNew, setNotifyNew] = useState<string | null>(null);
+  useEffect(() => {
+    let lastCount = data.length;
+    const iv = setInterval(async () => {
+      try {
+        const n = await adminApi.notifications();
+        if (n.count > lastCount) {
+          setNotifyNew(`Nouvelle réservation reçue (${n.count})`);
+          // refresh list
+          reload();
+          lastCount = n.count;
+          setTimeout(() => setNotifyNew(null), 5000);
+        } else {
+          lastCount = n.count;
+        }
+      } catch {
+        // ignore
+      }
+    }, 5000);
+    return () => clearInterval(iv);
+  }, [reload, data.length]);
+
   return (
     <>
       <PageHeader title="Réservations" subtitle={`${data.length} réservation(s) au total.`} />
+      {notifyNew && (
+        <div className="mt-3 mx-4 p-3 bg-amber-50 border border-amber-100 text-amber-900 rounded-md text-sm">
+          {notifyNew}
+        </div>
+      )}
 
       {data.length === 0 ? (
         <Empty message="Aucune réservation reçue." />
@@ -58,7 +97,12 @@ export default function ReservationsAdmin() {
                         </span>
                       </td>
                       <td className="text-right pr-4">
-                        <Button variant="ghost" onClick={() => del(r.id)}>🗑</Button>
+                        {r.status !== "confirmed" && (
+                          <Button variant="primary" onClick={() => confirm(r.id)} className="mr-2">
+                            Confirmer
+                          </Button>
+                        )}
+                        <Button variant="ghost" onClick={() => del(r.id)}><Icon name="trash" /></Button>
                       </td>
                     </tr>
                   ))}
@@ -89,6 +133,11 @@ export default function ReservationsAdmin() {
                   <div className="font-serif text-xl text-stone-800">{r.total}€</div>
                 </div>
                 <div className="mt-3 pt-3 border-t border-stone-100 text-right">
+                  {r.status !== "confirmed" && (
+                    <Button variant="primary" onClick={() => confirm(r.id)} className="mr-2">
+                      Confirmer
+                    </Button>
+                  )}
                   <Button variant="danger" onClick={() => del(r.id)}>
                     Supprimer
                   </Button>

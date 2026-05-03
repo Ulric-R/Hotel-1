@@ -9,7 +9,7 @@ export default function Footer({ onAdminClick }: Props) {
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
               <path d="M12 2L4 14h5v8h6v-8h5L12 2z" />
             </svg>
-            Sylvana
+            Fanja
           </div>
           <p className="mt-4 text-sm">L'art de vivre au cœur de la nature.</p>
         </div>
@@ -47,7 +47,7 @@ export default function Footer({ onAdminClick }: Props) {
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-10 pt-6 border-t border-stone-800 text-xs text-stone-500 flex flex-col sm:flex-row justify-between gap-3 items-center text-center sm:text-left">
-        <span>© 2026 Sylvana — Tous droits réservés</span>
+        <span>© 2026 Fanja — Tous droits réservés</span>
         <div className="flex items-center gap-4">
           <button
             onClick={onAdminClick}

@@ -17,7 +17,7 @@ export default function About() {
             Un sanctuaire suspendu entre forêt et silence.
           </h2>
           <p className="mt-6 text-stone-600 leading-relaxed">
-            Imaginé par une famille passionnée de nature, Sylvana est un hôtel
+            Imaginé par une famille passionnée de nature, Fanja est un hôtel
             intimiste qui célèbre l'art de vivre dans la simplicité. Chaque
             hébergement a été conçu pour s'intégrer harmonieusement à son
             environnement, en utilisant des matériaux locaux et des énergies

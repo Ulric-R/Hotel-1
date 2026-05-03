@@ -2,6 +2,7 @@ import { useState } from "react";
 import { adminApi, api, type Photo } from "../lib/api";
 import { useApiData } from "../lib/useApi";
 import { Button, Card, ConfirmDelete, Empty, Field, ImageUploader, Input, PageHeader } from "./ui";
+import Icon from "./icons";
 
 const CATEGORIES = ["general", "exterior", "rooms", "spa", "dining", "nature"];
 
@@ -95,8 +96,8 @@ export default function PhotosAdmin() {
               className={`bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg px-4 py-2.5 text-sm text-center transition-colors ${
                 uploading ? "opacity-50" : ""
               }`}
-            >
-              {uploading ? "Téléversement..." : "📤 Choisir un fichier"}
+              >
+              {uploading ? "Téléversement..." : <><Icon name="upload" /> Choisir un fichier</>}
             </div>
             <input
               type="file"
@@ -138,7 +139,7 @@ export default function PhotosAdmin() {
                   <Button variant="secondary" className="text-xs px-2 py-1" onClick={() => setEditing(p)}>
                     Éditer
                   </Button>
-                  <ConfirmDelete onConfirm={() => del(p.id)} label="🗑" />
+                  <ConfirmDelete onConfirm={() => del(p.id)} label="Supprimer" />
                 </div>
               </div>
             </Card>

@@ -26,14 +26,6 @@
     "order": 10
   },
   {
-    "id": "act-2",
-    "title": "Yoga en forêt",
-    "description": "Sessions matinales au cœur des arbres.",
-    "icon": "🧘",
-    "featured": false,
-    "order": 11
-  },
-  {
     "id": "act-3",
     "title": "VTT électrique",
     "description": "Location de vélos pour explorer le domaine.",
@@ -64,5 +56,14 @@
     "icon": "⭐",
     "featured": false,
     "order": 15
+  },
+  {
+    "title": "Quad",
+    "description": "vroummm",
+    "icon": "QUADD",
+    "image": null,
+    "featured": true,
+    "order": 10,
+    "id": "7ab2c58035ef"
   }
 ]

@@ -1,15 +1,16 @@
 import { api, type Activity } from "../lib/api";
 import { useApiData } from "../lib/useApi";
+import Icon from "../admin/icons";
 
 const FALLBACK: Activity[] = [
-  { id: "act-spa", title: "Spa & Bien-être", description: "Bain nordique en plein air, sauna finlandais et massages aux huiles essentielles de la forêt.", icon: "♨️", image: "/images/spa.jpg", featured: true, order: 1 },
-  { id: "act-resto", title: "Table Forestière", description: "Cuisine de saison signée par notre chef, avec des produits cueillis chaque matin.", icon: "🍽️", image: "/images/restaurant.jpg", featured: true, order: 2 },
-  { id: "act-1", title: "Randonnées guidées", description: "", icon: "🥾", featured: false, order: 10 },
-  { id: "act-2", title: "Yoga en forêt", description: "", icon: "🧘", featured: false, order: 11 },
-  { id: "act-3", title: "VTT électrique", description: "", icon: "🚴", featured: false, order: 12 },
-  { id: "act-4", title: "Observation faune", description: "", icon: "🦌", featured: false, order: 13 },
-  { id: "act-5", title: "Soirées au feu", description: "", icon: "🔥", featured: false, order: 14 },
-  { id: "act-6", title: "Bain de canopée", description: "", icon: "⭐", featured: false, order: 15 },
+  { id: "act-spa", title: "Spa & Bien-être", description: "Bain nordique en plein air, sauna finlandais et massages aux huiles essentielles de la forêt.", icon: "star", image: "/images/spa.jpg", featured: true, order: 1 },
+  { id: "act-resto", title: "Table Forestière", description: "Cuisine de saison signée par notre chef, avec des produits cueillis chaque matin.", icon: "camera", image: "/images/restaurant.jpg", featured: true, order: 2 },
+  { id: "act-1", title: "Randonnées guidées", description: "", icon: "hike", featured: false, order: 10 },
+  { id: "act-2", title: "Yoga en forêt", description: "", icon: "yoga", featured: false, order: 11 },
+  { id: "act-3", title: "VTT électrique", description: "", icon: "bike", featured: false, order: 12 },
+  { id: "act-4", title: "Observation faune", description: "", icon: "leaf", featured: false, order: 13 },
+  { id: "act-5", title: "Soirées au feu", description: "", icon: "fire", featured: false, order: 14 },
+  { id: "act-6", title: "Bain de canopée", description: "", icon: "star", featured: false, order: 15 },
 ];
 
 export default function Experiences() {
@@ -27,7 +28,7 @@ export default function Experiences() {
             Expériences
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl mt-4 text-stone-800">
-            Vivre Sylvana
+            Vivre Fanja
           </h2>
         </div>
 
@@ -46,12 +47,12 @@ export default function Experiences() {
                   />
                 ) : (
                   <div className="w-full h-full bg-gradient-to-br from-emerald-700 to-emerald-900 flex items-center justify-center text-7xl">
-                    {it.icon}
+                    <Icon name={it.icon} size={72} />
                   </div>
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 text-white">
-                  <span className="text-2xl">{it.icon}</span>
+                  <span className="text-2xl"><Icon name={it.icon} size={24} /></span>
                   <h3 className="font-serif text-2xl sm:text-3xl mt-2">{it.title}</h3>
                   <p className="mt-3 text-white/85 text-sm max-w-md">{it.description}</p>
                 </div>
@@ -72,7 +73,7 @@ export default function Experiences() {
                   title={a.description}
                   className="flex flex-col items-center text-center gap-3 p-4 rounded-xl hover:bg-stone-50 transition-colors"
                 >
-                  <span className="text-4xl">{a.icon}</span>
+                  <span className="text-4xl"><Icon name={a.icon} size={36} /></span>
                   <span className="text-sm text-stone-700">{a.title}</span>
                 </div>
               ))}

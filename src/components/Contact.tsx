@@ -28,7 +28,7 @@ export default function Contact() {
                 </svg>
               </div>
               <div>
-                <div className="font-medium">Domaine de Sylvana</div>
+                <div className="font-medium">Domaine de Fanja</div>
                 <div className="text-sm text-emerald-200/80">
                   Route Forestière, 73120 Massif des Alpes, France
                 </div>
@@ -57,7 +57,7 @@ export default function Contact() {
                 </svg>
               </div>
               <div>
-                <div className="font-medium">contact@sylvana-hotel.fr</div>
+                <div className="font-medium">contact@Fanja-hotel.fr</div>
                 <div className="text-sm text-emerald-200/80">
                   Réponse sous 24h
                 </div>

@@ -11,7 +11,7 @@ This Nginx instance:
 
 ```
 user:     admin
-password: sylvana2026
+password: Fanja2026
 ```
 
 ## Generate a new password

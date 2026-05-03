@@ -8,7 +8,7 @@ const empty: Omit<Article, "id" | "created_at"> = {
   excerpt: "",
   content: "",
   image: "",
-  author: "Équipe Sylvana",
+  author: "Équipe Fanja",
   category: "Nature",
 };
 

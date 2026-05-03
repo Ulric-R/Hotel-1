@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Generate / regenerate the .htpasswd file used by Nginx for Basic Auth.
 # Usage:   ./generate-htpasswd.sh <user> <password>
-# Example: ./generate-htpasswd.sh admin sylvana2026
+# Example: ./generate-htpasswd.sh admin Fanja2026
 
 set -e
 USER="${1:-admin}"
-PASS="${2:-sylvana2026}"
+PASS="${2:-Fanja2026}"
 
 cd "$(dirname "$0")"
 

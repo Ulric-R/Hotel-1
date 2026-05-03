@@ -25,6 +25,12 @@ export default function ReservationModal({ rooms, open, onClose, initialRoom }: 
   const [notes, setNotes] = useState("");
   const [confirmed, setConfirmed] = useState(false);
 
+  // Keep all hooks (useState/useEffect) at the top level and in a stable order.
+  // `bookingNumber` and `submitting` must be declared before any early
+  // returns so the hook order does not change between renders.
+  const [bookingNumber, setBookingNumber] = useState<string>("");
+  const [submitting, setSubmitting] = useState(false);
+
   useEffect(() => {
     if (initialRoom) {
       setSelectedRoomId(initialRoom.id);
@@ -60,8 +66,7 @@ export default function ReservationModal({ rooms, open, onClose, initialRoom }: 
   const next = () => setStep((s) => Math.min(4, s + 1) as Step);
   const prev = () => setStep((s) => Math.max(1, s - 1) as Step);
 
-  const [bookingNumber, setBookingNumber] = useState<string>("");
-  const [submitting, setSubmitting] = useState(false);
+
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();

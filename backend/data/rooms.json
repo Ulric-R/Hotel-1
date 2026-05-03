@@ -49,27 +49,5 @@
       "Lanternes",
       "Hamac suspendu"
     ]
-  },
-  {
-    "name": "string",
-    "type": "string",
-    "price": 10.0,
-    "capacity": 0,
-    "size": 0,
-    "image": "string",
-    "description": "string",
-    "amenities": [],
-    "id": "6dac408626e8"
-  },
-  {
-    "name": "string",
-    "type": "string",
-    "price": 10.0,
-    "capacity": 0,
-    "size": 0,
-    "image": "string",
-    "description": "string",
-    "amenities": [],
-    "id": "d8004baa8b79"
   }
 ]

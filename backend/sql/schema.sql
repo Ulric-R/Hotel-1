@@ -1,0 +1,71 @@
+-- MySQL schema for Fanja Hotel application
+
+CREATE TABLE IF NOT EXISTS rooms (
+  id VARCHAR(32) PRIMARY KEY,
+  name TEXT NOT NULL,
+  type VARCHAR(128) NOT NULL,
+  price DECIMAL(10,2) NOT NULL,
+  capacity INT NOT NULL,
+  size INT NOT NULL,
+  image TEXT NOT NULL,
+  description TEXT NOT NULL,
+  amenities JSON NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS articles (
+  id VARCHAR(32) PRIMARY KEY,
+  title TEXT NOT NULL,
+  excerpt TEXT NOT NULL,
+  content LONGTEXT NOT NULL,
+  image TEXT NOT NULL,
+  author VARCHAR(200) NOT NULL,
+  category VARCHAR(128) NOT NULL,
+  created_at DATETIME NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS promos (
+  id VARCHAR(32) PRIMARY KEY,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  discount_percent INT NOT NULL,
+  valid_until DATE NOT NULL,
+  image TEXT NULL,
+  active TINYINT(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS photos (
+  id VARCHAR(32) PRIMARY KEY,
+  url TEXT NOT NULL,
+  caption TEXT NULL,
+  category VARCHAR(128) NOT NULL,
+  uploaded_at DATETIME NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS activities (
+  id VARCHAR(32) PRIMARY KEY,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  icon VARCHAR(16) NULL,
+  image TEXT NULL,
+  featured TINYINT(1) NOT NULL DEFAULT 0,
+  `order` INT NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS reservations (
+  id VARCHAR(32) PRIMARY KEY,
+  room_id VARCHAR(32) NOT NULL,
+  check_in DATE NOT NULL,
+  check_out DATE NOT NULL,
+  guests INT NOT NULL,
+  name TEXT NOT NULL,
+  email VARCHAR(320) NOT NULL,
+  phone VARCHAR(64) NOT NULL,
+  notes TEXT NULL,
+  booking_number VARCHAR(64) NOT NULL,
+  total DECIMAL(10,2) NOT NULL DEFAULT 0,
+  nights INT NOT NULL DEFAULT 1,
+  status VARCHAR(64) NOT NULL DEFAULT 'confirmed',
+  created_at DATETIME NOT NULL,
+  FOREIGN KEY (room_id) REFERENCES rooms(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

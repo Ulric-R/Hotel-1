@@ -22,7 +22,7 @@ export default function Gallery() {
             Galerie
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl mt-4">
-            Un avant-goût de Sylvana
+            Un avant-goût de Fanja
           </h2>
         </div>
 

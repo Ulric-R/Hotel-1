@@ -1,4 +1,4 @@
-# Sylvana Hotel — FastAPI Backend
+# Fanja Hotel — FastAPI Backend
 
 ## Local development
 

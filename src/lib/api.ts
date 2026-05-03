@@ -1,5 +1,5 @@
 /**
- * Lightweight API client for the Sylvana FastAPI backend.
+ * Lightweight API client for the Fanja FastAPI backend.
  *
  * In dev (Vite), set VITE_API_BASE=http://localhost:8000 in a .env file
  * (or rely on a Vite proxy). In production behind Nginx, requests go to
@@ -172,4 +172,8 @@ export const adminApi = {
   reservations: () => request<Reservation[]>("/api/admin/reservations"),
   deleteReservation: (id: string) =>
     request<{ deleted: boolean }>(`/api/admin/reservations/${id}`, { method: "DELETE" }),
+  confirmReservation: (id: string) =>
+    request<Reservation>(`/api/admin/reservations/${id}/confirm`, { method: "POST" }),
+  notifications: () =>
+    request<{ count: number; items: Reservation[] }>(`/api/admin/notifications`),
 };

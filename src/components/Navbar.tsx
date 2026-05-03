@@ -42,7 +42,7 @@ export default function Navbar({ onNavigate, onReserve }: Props) {
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
             <path d="M12 2L4 14h5v8h6v-8h5L12 2z" />
           </svg>
-          <span>Sylvana</span>
+          <span>Fanja</span>
         </button>
 
         <nav className="hidden md:flex items-center gap-8">
