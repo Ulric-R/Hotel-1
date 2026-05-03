@@ -1,0 +1,22 @@
+[
+  {
+    "id": "art-1",
+    "title": "L'art du bain de forêt",
+    "excerpt": "Découvrez le shinrin-yoku, cette pratique japonaise qui invite à se reconnecter à la nature.",
+    "content": "Le shinrin-yoku, ou bain de forêt, est bien plus qu'une simple promenade. C'est une immersion sensorielle complète...",
+    "image": "/images/hero.jpg",
+    "author": "Marie Dubois",
+    "category": "Bien-être",
+    "created_at": "2026-01-15T10:00:00"
+  },
+  {
+    "id": "art-2",
+    "title": "Cuisine de saison : automne en forêt",
+    "excerpt": "Notre chef partage sa philosophie de la cuisine forestière et ses produits du moment.",
+    "content": "L'automne est une saison généreuse en forêt. Champignons, châtaignes, baies sauvages...",
+    "image": "/images/restaurant.jpg",
+    "author": "Chef Laurent",
+    "category": "Gastronomie",
+    "created_at": "2026-02-03T14:30:00"
+  }
+]
