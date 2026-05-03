@@ -19,7 +19,7 @@ try:
     # without a running MySQL server.
     default_sqlite = f"sqlite:///{(Path(__file__).resolve().parent.parent / 'data' / 'Fanja.db').as_posix()}"
     DB_URL = os.getenv("DATABASE_URL", default_sqlite)
-
+ 
     # Create engine and session factory. For SQLite we must pass `connect_args`.
     connect_args = {"check_same_thread": False} if DB_URL.startswith("sqlite:") else {}
     engine: Engine = create_engine(DB_URL, future=True, connect_args=connect_args)

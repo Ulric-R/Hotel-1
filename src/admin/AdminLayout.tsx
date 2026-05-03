@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { adminApi } from "../lib/api";
 import Icon from "./icons";
 
@@ -22,6 +22,8 @@ export default function AdminLayout({ active, onChange, onExit, children }: Prop
   const [user, setUser] = useState<string>("admin");
   const [apiReachable, setApiReachable] = useState<boolean | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [notificationsCount, setNotificationsCount] = useState<number>(0);
+  const prevCount = useRef<number>(0);
 
   useEffect(() => {
     adminApi
@@ -31,6 +33,48 @@ export default function AdminLayout({ active, onChange, onExit, children }: Prop
         setApiReachable(true);
       })
       .catch(() => setApiReachable(false));
+  }, []);
+
+  // Poll admin notifications and play a short beep on new reservations
+  useEffect(() => {
+    let mounted = true;
+    const iv = setInterval(async () => {
+      try {
+        const n = await adminApi.notifications();
+        if (!mounted) return;
+        setNotificationsCount(n.count ?? 0);
+        if (typeof prevCount.current === "number" && n.count > prevCount.current) {
+          // play notification sound (short beep)
+          try {
+            const AC = window.AudioContext || (window as any).webkitAudioContext;
+            if (AC) {
+              const ctx = new AC();
+              const o = ctx.createOscillator();
+              const g = ctx.createGain();
+              o.type = "sine";
+              o.frequency.value = 880;
+              g.gain.value = 0.08;
+              o.connect(g);
+              g.connect(ctx.destination);
+              o.start();
+              setTimeout(() => {
+                o.stop();
+                try {
+                  ctx.close();
+                } catch {}
+              }, 180);
+            }
+          } catch {}
+        }
+        prevCount.current = n.count ?? 0;
+      } catch {
+        // ignore network errors
+      }
+    }, 5000);
+    return () => {
+      mounted = false;
+      clearInterval(iv);
+    };
   }, []);
 
   const tabs: { id: Tab; label: string; icon: string }[] = [
@@ -74,7 +118,12 @@ export default function AdminLayout({ active, onChange, onExit, children }: Prop
             }`}
           >
             <span className="w-5 h-5"><Icon name={t.icon} size={18} /></span>
-            {t.label}
+            <div className="flex-1 text-left">{t.label}</div>
+            {t.id === "reservations" && notificationsCount > 0 && (
+              <div className="ml-2 inline-flex items-center justify-center w-6 h-6 rounded-full bg-red-500 text-white text-xs font-medium">
+                {notificationsCount}
+              </div>
+            )}
           </button>
         ))}
       </nav>
