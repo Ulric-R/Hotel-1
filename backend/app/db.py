@@ -105,7 +105,7 @@ try:
         Column("booking_number", String(64), nullable=False),
         Column("total", Numeric(10, 2), nullable=False, server_default="0"),
         Column("nights", Integer, nullable=False, server_default="1"),
-        Column("status", String(64), nullable=False, server_default='confirmed'),
+        Column("status", String(64), nullable=False, server_default="pending"),
         Column("created_at", DateTime, nullable=False),
     )
 

@@ -80,6 +80,9 @@ try:
                         pass
             return out
 
+        # Ensure reservations have a status field – if missing, default to 'pending'
+        if name == "reservations" and "status" not in item:
+            item["status"] = "pending"
         with db.SessionLocal() as session:
             stmt = sa_insert(t).values(**_coerce(t, item))
             session.execute(stmt)
